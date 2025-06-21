@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>Home Page</title>
+    <title>Home - Live Inventory</title>
 {% endblock %}
 
 {% block body %}
-<h1>This is the home Page</h1>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Welcome to the Live Inventory Portal 🛒</h1>
+            <p class="lead text-muted">Check item availability before visiting the store — quick, live, and accurate!</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <a href="{{ url_for('inventory') }}" class="btn btn-primary btn-lg shadow rounded-pill px-4">
+                    View Inventory
+                </a>
+                {% if not current_user.is_authenticated %}
+                <p class="mt-3">
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-secondary me-2">Login</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-success">Register</a>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

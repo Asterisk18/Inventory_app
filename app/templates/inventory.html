@@ -22,45 +22,34 @@
             <a href="{{ url_for('add_item') }}" class="btn btn-primary mb-3">Add Item</a>
         {% endif %}
         <h1 class="inventory-header display-5 fw-bold">🛒 Live Inventory</h1>
-        
-        <form method="GET" class="mb-4">
-            <input type="text" name="q" class="form-control" placeholder="Search item...">
+
+        <form id="live-search-form" class="mb-4">
+            <input type="text" name="q" id="search-box" class="form-control" placeholder="Search item...">
         </form>
-        {% if items %}
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                {% for item in items %}
-                    <div class="col">
-                        <div class="card inventory-card shadow border-0 rounded-4 h-100">
-                            <div class="card-body">
-                                <h4 class="card-title text-primary">{{ item.name }}</h4>
-                                <p class="card-text fs-5">
-                                    <strong>Available:</strong> 
-                                    <span class="badge bg-success px-3 py-2 fs-6">{{ item.quantity }}</span>
-                                </p>
-                                {% if current_user.is_admin %}
-                                    <form method="POST" class="d-flex gap-2 mt-2">
-                                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                                        <button name="action" value="add" class="btn btn-success btn-sm">➕</button>
-                                        <button name="action" value="deduct" class="btn btn-danger btn-sm">➖</button>
-                                    </form>
-                                    <form method="POST" class="d-flex gap-2 mt-2 item-update-form">
-                                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                                        <input type="number" name="quantity" value="{{ item.quantity }}" min="0" class="form-control form-control-sm w-50">
-                                        <button name="action" value="set" class="btn btn-primary btn-sm">Update</button>
-                                    </form>
-                                {% endif %}
-                            </div>
-                            <div class="card-footer bg-light text-muted small">
-                                Last updated: {{ item.last_updated.strftime('%b %d, %Y %H:%M') }}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-warning text-center">
-                No items available in inventory right now.
-            </div>
-        {% endif %}
+
+        <div id="inventory-results">
+            {% include 'inventory_results.html' %}
+        </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchBox = document.getElementById("search-box");
+            const inventoryResults = document.getElementById("inventory-results");
+
+            searchBox.addEventListener("input", function () {
+                const query = searchBox.value.trim();
+
+                fetch(`/inventory?q=${encodeURIComponent(query)}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const htmlDoc = parser.parseFromString(data, "text/html");
+                        const newResults = htmlDoc.getElementById("inventory-results").innerHTML;
+
+                        inventoryResults.innerHTML = newResults;
+                    });
+            });
+        });
+    </script>
 {% endblock %}

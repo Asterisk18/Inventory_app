@@ -1,5 +1,32 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <title>Account - {{ current_user.username }}</title>
+{% endblock %}
+
 {% block body %}
-    <h1>{{ current_user.username }}</h1>
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">👤 Account Dashboard</h1>
+        <p class="text-muted">Manage your account details and preferences.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 rounded-4 p-4 {% if 'dark-mode' in request.cookies.get('theme', '') %}dark-mode{% endif %}">
+                <h4 class="card-title text-primary">Welcome, {{ current_user.username }}!</h4>
+                <p class="card-text"><strong>Email:</strong> {{ current_user.email }}</p>
+                <p class="card-text">
+                    <strong>Role:</strong> 
+                    {% if current_user.is_admin %}
+                        <span class="badge bg-danger">Admin</span>
+                    {% else %}
+                        <span class="badge bg-secondary">User</span>
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger mt-3">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

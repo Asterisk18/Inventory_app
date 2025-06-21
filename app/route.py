@@ -93,6 +93,8 @@ def inventory():
         else:
             flash("Item not found" , "danger")
 
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return render_template("inventory_results.html", items=items)
     # items = Item.query.order_by(Item.name).all()
     return render_template('inventory.html' , items = items)
 

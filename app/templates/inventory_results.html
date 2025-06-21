@@ -1,0 +1,51 @@
+{% if items %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for item in items %}
+            <div class="col">
+                <div class="card inventory-card shadow border-0 rounded-4 h-100">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary d-flex justify-content-between align-items-center">
+                            {{ item.name }}
+                            {% if not current_user.is_admin %}
+                                <button class="btn btn-outline-warning btn-sm" title="Star this item">⭐</button>
+                            {% endif %}
+                        </h4>
+
+                        <p class="card-text fs-5">
+                            <strong>Available:</strong> 
+                            <span class="badge bg-success px-3 py-2 fs-6">{{ item.quantity }}</span>
+                        </p>
+
+                        {% if current_user.is_admin %}
+                            <form method="POST" class="d-flex gap-2 mt-2">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button name="action" value="add" class="btn btn-success btn-sm">➕</button>
+                                <button name="action" value="deduct" class="btn btn-danger btn-sm">➖</button>
+                            </form>
+
+                            <form method="POST" class="d-flex gap-2 mt-2 item-update-form">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="0" class="form-control form-control-sm w-50">
+                                <button name="action" value="set" class="btn btn-primary btn-sm">Update</button>
+                            </form>
+
+                            <!-- Admin-only Edit/Delete Buttons -->
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="#" class="btn btn-outline-secondary btn-sm w-100">✏️ Edit</a>
+                                <a href="#" class="btn btn-outline-danger btn-sm w-100">🗑️ Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-footer bg-light text-muted small">
+                        Last updated: {{ item.last_updated.strftime('%b %d, %Y %H:%M') }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning text-center">
+        No items match your search.
+    </div>
+{% endif %}
