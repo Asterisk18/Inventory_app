@@ -9,6 +9,11 @@
     .card {
         border-radius: 1rem;
     }
+    .form-error {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
 </style>
 {% endblock %}
 
@@ -27,21 +32,33 @@
                         <div class="form-floating mb-3">
                             {{ form.username(class="form-control", id="username", placeholder="Username") }}
                             {{ form.username.label(class="form-label", for="username") }}
+                            {% for error in form.username.errors %}
+                                <div class="form-error">{{ error }}</div>
+                            {% endfor %}
                         </div>
 
                         <div class="form-floating mb-3">
                             {{ form.email(class="form-control", id="email", placeholder="Email") }}
                             {{ form.email.label(class="form-label", for="email") }}
+                            {% for error in form.email.errors %}
+                                <div class="form-error">{{ error }}</div>
+                            {% endfor %}
                         </div>
 
                         <div class="form-floating mb-3">
                             {{ form.password(class="form-control", id="password", placeholder="Password") }}
                             {{ form.password.label(class="form-label", for="password") }}
+                            {% for error in form.password.errors %}
+                                <div class="form-error">{{ error }}</div>
+                            {% endfor %}
                         </div>
 
                         <div class="form-floating mb-4">
                             {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="Confirm Password") }}
                             {{ form.confirm_password.label(class="form-label", for="confirm_password") }}
+                            {% for error in form.confirm_password.errors %}
+                                <div class="form-error">{{ error }}</div>
+                            {% endfor %}
                         </div>
                     </fieldset>
 

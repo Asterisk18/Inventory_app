@@ -15,9 +15,6 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     {% if current_user.is_authenticated %}
-                        {% if current_user.is_admin %}
-                            <a href="{{ url_for('manage_inventory') }}" class="navbar-brand">Update_Inventory</a>
-                        {% endif %}
                         <a href="{{ url_for('inventory') }}" class="navbar-brand">Inventory</a>
                         <a href="{{ url_for('account') }}" class="navbar-brand">Account</a>
                         <a href="{{ url_for('logout') }}" class="navbar-brand">logout</a>

@@ -1,5 +1,6 @@
+from datetime import datetime
 from app import app, db, bcrypt
-from flask import render_template , url_for , redirect , flash
+from flask import render_template , url_for , redirect , flash , request
 from app.forms import RegistrationForm , LoginForm , ItemForm
 from app.models import User , Item
 from flask_login import login_user, logout_user, login_required, current_user
@@ -55,27 +56,57 @@ def logout():
 def account():
     return render_template("account.html")
 
-
-@app.route("/update" , methods=['GET' , 'POST'])
-@admin_required
-def manage_inventory():
-
-    form = ItemForm()
-    if form.validate_on_submit():
-        item = Item.query.filter_by(name = form.name.data).first()
-        if item:
-            item.quantity = form.quantity.data
-            db.session.commit()
-        else:
-            new_item = Item(name = form.name.data , quantity = form.quantity.data)
-            db.session.add(new_item)
-            db.session.commit()
-        flash("Item Updated" , "success")
-        return redirect(url_for("manage_inventory"))
-    items = Item.query.all()
-    return render_template('manage_inventory.html' , form=form , items=items)
-
-@app.route("/inventory")
+@app.route("/inventory" , methods=['GET' , 'POST'])
 def inventory():
+    query = request.args.get('q', '').strip().lower()
     items = Item.query.order_by(Item.name).all()
+
+    if query:
+        items = [item for item in items if query in item.name.lower()]
+
+    if request.method == 'POST' and current_user.is_authenticated and current_user.is_admin:
+        item_id = request.form.get('item_id')
+        action = request.form.get('action')
+        item = Item.query.get(item_id)
+
+        if item:
+            if action == "add":
+                item.quantity +=1
+            elif action == "deduct" and item.quantity>0:
+                item.quantity -=1
+            elif action == "set":
+                try:
+                    quantity = int(request.form.get('quantity'))
+                    if quantity>0:
+                        item.quantity = quantity
+                    else:
+                        flash("The quantity cannot be negative" , "warning")
+                except:
+                    flash("Error occured in the process" , "danger")
+
+                item.last_updated = datetime.utcnow()
+                db.session.commit()
+                    
+            item.last_updated = datetime.utcnow()
+            db.session.commit()
+            flash("Item value Updated Succesfully" , "success")
+        else:
+            flash("Item not found" , "danger")
+
+    # items = Item.query.order_by(Item.name).all()
     return render_template('inventory.html' , items = items)
+
+
+@app.route("/add_item" , methods=['GET' , 'POST'])
+@login_required
+@admin_required
+def add_item():
+    form = ItemForm()
+
+    if form.validate_on_submit():
+        item = Item(name = form.name.data , quantity = form.quantity.data)
+        db.session.add(item)
+        db.session.commit()
+        return redirect(url_for('inventory'))
+    
+    return render_template('add_item.html' , form=form)

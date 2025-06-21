@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField , PasswordField , SubmitField , BooleanField , IntegerField
 from wtforms.validators import DataRequired , Length, Email, EqualTo, ValidationError , NumberRange
-from app.models import User
+from app.models import User , Item
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username' , validators=[DataRequired() , Length(5,20)])
+    username = StringField('Username' , validators=[DataRequired() , Length(4,20)])
     email = StringField('Email' , validators=[DataRequired() , Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired() , EqualTo('password')])
@@ -32,3 +32,8 @@ class ItemForm(FlaskForm):
     name = StringField('Item Name' , validators=[DataRequired()])
     quantity = IntegerField('Quantity' , validators=[DataRequired() , NumberRange(min=0)])
     submit = SubmitField('Submit')
+
+    def validate_name(self , name):
+        item = Item.query.filter_by(name = name.data).first()
+        if item:
+            raise ValidationError("Item name already exists, Try another name")
