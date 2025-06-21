@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Register</title>
+<style>
+    body {
+        background-color: #f2f4f8;
+    }
+    .card {
+        border-radius: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-center bg-white border-bottom-0">
+                <h3 class="fw-bold mb-0">Create Your Account</h3>
+                <small class="text-muted">Join us by filling the form below</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <fieldset>
+                        <div class="form-floating mb-3">
+                            {{ form.username(class="form-control", id="username", placeholder="Username") }}
+                            {{ form.username.label(class="form-label", for="username") }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.email(class="form-control", id="email", placeholder="Email") }}
+                            {{ form.email.label(class="form-label", for="email") }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.password(class="form-control", id="password", placeholder="Password") }}
+                            {{ form.password.label(class="form-label", for="password") }}
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="Confirm Password") }}
+                            {{ form.confirm_password.label(class="form-label", for="confirm_password") }}
+                        </div>
+                    </fieldset>
+
+                    <div class="d-grid mb-3">
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                    </div>
+
+                    <div class="text-center">
+                        <small>Already have an account? <a href="{{ url_for('login') }}" class="text-decoration-none text-primary fw-bold">Login here</a></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

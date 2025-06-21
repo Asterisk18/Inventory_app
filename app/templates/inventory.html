@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Live Inventory</title>
+    <style>
+        .inventory-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .inventory-card {
+            transition: transform 0.2s;
+        }
+        .inventory-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="inventory-header display-5 fw-bold">🛒 Live Inventory</h1>
+
+        {% if items %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for item in items %}
+                    <div class="col">
+                        <div class="card inventory-card shadow border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h4 class="card-title text-primary">{{ item.name }}</h4>
+                                <p class="card-text fs-5">
+                                    <strong>Available:</strong> 
+                                    <span class="badge bg-success px-3 py-2 fs-6">{{ item.quantity }}</span>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-light text-muted small">
+                                Last updated: {{ item.last_updated.strftime('%b %d, %Y %H:%M') }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                No items available in inventory right now.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

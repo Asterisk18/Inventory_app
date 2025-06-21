@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Login</title>
+<style>
+    body {
+        background-color: #f2f4f8;
+    }
+    .card {
+        border-radius: 1rem;
+    }
+    .form-check-input:focus {
+        box-shadow: none;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-center bg-white border-bottom-0">
+                <h3 class="fw-bold mb-0">Welcome Back</h3>
+                <small class="text-muted">Please log in to your account</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <fieldset>
+                        <div class="form-floating mb-3">
+                            {{ form.email(class="form-control", id="email", placeholder="Email") }}
+                            {{ form.email.label(class="form-label", for="email") }}
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {{ form.password(class="form-control", id="password", placeholder="Password") }}
+                            {{ form.password.label(class="form-label", for="password") }}
+                        </div>
+
+                        <div class="form-check mb-3">
+                            {{ form.remember(class="form-check-input", id="remember") }}
+                            {{ form.remember.label(class="form-check-label", for="remember") }}
+                        </div>
+                    </fieldset>
+
+                    <div class="d-grid mb-3">
+                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                    </div>
+
+                    <div class="text-center">
+                        <small><a href="#" class="text-decoration-none text-primary">Forgot Password?</a></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
