@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<title>Edit Item</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Editing item : {{ item.name }}</h1>
+    <div class="card-body p-4">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset>
+                <div class="form-floating mb-3">
+                    {{ form.name(class="form-control", id="username", placeholder="Username") }}
+                    {{ form.name.label(class="form-label", for="username") }}
+                    {% for error in form.name.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.quantity(class="form-control", id="email", placeholder="Email") }}
+                    {{ form.quantity.label(class="form-label", for="email") }}
+                    {% for error in form.quantity.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <div class="d-grid mb-3">
+                {{ form.submit(class="btn btn-primary btn-lg") }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -110,5 +110,33 @@ def add_item():
         db.session.add(item)
         db.session.commit()
         return redirect(url_for('inventory'))
-    
     return render_template('add_item.html' , form=form)
+
+@app.route("/edit_item/<int:item_id>" , methods=['GET' , 'POST'])
+@login_required
+@admin_required
+def edit_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    form = ItemForm(obj=item)
+    form.original_name = item.name
+
+    if form.validate_on_submit():
+        item.name = form.name.data
+        item.quantity = form.quantity.data
+        item.last_updated = datetime.utcnow()
+        db.session.commit()
+        flash("Item details Updated" , "success")
+        return redirect(url_for('inventory'))
+    
+    return render_template('edit_item.html' , form=form , item=item)
+        
+@app.route("/delete_item/<int:item_id>" , methods=['POST'])
+@login_required
+@admin_required
+def delete_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    db.session.delete(item)
+    db.session.commit()
+
+    flash("Item deleted Successfully" , "success")
+    return redirect(url_for("inventory"))

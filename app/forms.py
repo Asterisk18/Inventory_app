@@ -11,14 +11,16 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Submit')
 
     def validate_username(self,username):
-        user = User.query.filter_by(username = username.data).first()
-        if user:
-            raise ValidationError("username not available")
+        if username.data != self.username:
+            user = User.query.filter_by(username = username.data).first()
+            if user:
+                raise ValidationError("username not available")
         
     def validate_email(self , email):
-        mail = User.query.filter_by(email=email.data).first()
-        if mail:
-            raise ValidationError("email already registered, try logging in")
+        if email.data != self.email:
+            mail = User.query.filter_by(email=email.data).first()
+            if mail:
+                raise ValidationError("email already registered, try logging in")
 
 
 class LoginForm(FlaskForm):
@@ -34,6 +36,11 @@ class ItemForm(FlaskForm):
     submit = SubmitField('Submit')
 
     def validate_name(self , name):
-        item = Item.query.filter_by(name = name.data).first()
-        if item:
-            raise ValidationError("Item name already exists, Try another name")
+        original_name = getattr(self , 'original_name' , None)
+        if name.data == original_name:
+            return # since the name is not changed
+        
+        else:
+            another_item = Item.query.filter_by(name = name.data).first()
+            if another_item:
+                raise ValidationError("Item name already exits, Try another name")
