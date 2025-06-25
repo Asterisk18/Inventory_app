@@ -29,6 +29,7 @@ docker pull asp117920/flask-app:latest
 
 # Run the app
 docker run -p 5000:5000 asp117920/flask-app:latest
+```
 
 ---
 
