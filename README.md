@@ -63,3 +63,43 @@ docker run -p 5000:5000 asp117920/flask-app:latest
 - **Forms & Auth:** Flask-WTF, Flask-Login
 - **Styling:** Bootstrap 5 + custom CSS
 - **Deployment Ready:** Dockerized
+
+---
+
+## ⚙️ Local Setup Without Docker
+
+If you'd prefer to run the project manually without Docker, follow these steps:
+
+```bash
+# 1. Clone the Repository
+git clone https://github.com/Asterisk18/inventory-app.git
+cd inventory-app
+```
+
+# 2. Create a Virtual Environment
+```python
+python3 -m venv venv
+source venv/bin/activate        # On Windows: venv\Scripts\activate
+```
+
+# 3. Install Dependencies
+```python
+pip install -r requirements.txt
+```
+
+# 4. Set Up the Database
+```bash
+flask shell
+>>> from app import db
+>>> db.create_all()
+>>> exit()
+```
+
+# 5. Run the App
+```python
+  python3 run.py
+```
+
+# App will be running at:
+# http://localhost:5000
+```
