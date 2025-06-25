@@ -21,6 +21,17 @@ This project is fully Dockerized and includes admin and user login presets for f
 
 ---
 
+## 🐳 Run with Docker
+
+```bash
+# Pull the latest image
+docker pull asp117920/flask-app:latest
+
+# Run the app
+docker run -p 5000:5000 asp117920/flask-app:latest
+
+---
+
 ## 👥 User Roles & Demo Credentials
 
 | Role         | Username | Email              | Password |
@@ -51,14 +62,3 @@ This project is fully Dockerized and includes admin and user login presets for f
 - **Forms & Auth:** Flask-WTF, Flask-Login
 - **Styling:** Bootstrap 5 + custom CSS
 - **Deployment Ready:** Dockerized
-
----
-
-## 🐳 Run with Docker
-
-```bash
-# Pull the latest image
-docker pull asp117920/flask-app:latest
-
-# Run the app
-docker run -p 5000:5000 asp117920/flask-app:latest
