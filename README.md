@@ -71,7 +71,6 @@ docker run -p 5000:5000 asp117920/flask-app:latest
 If you'd prefer to run the project manually without Docker, follow these steps:
 ### 1. Clone the repository
 ```bash
-# 1. Clone the Repository
 git clone https://github.com/Asterisk18/inventory-app.git
 cd inventory-app
 ```
