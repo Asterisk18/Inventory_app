@@ -39,8 +39,8 @@ This project is fully Dockerized and includes admin and user login presets for f
 
 - View available products before physically visiting
 - Avoid unnecessary trips if items are out of stock
-- Suggest new items (future roadmap)
-- Use the same app for campus **medical store inventory tracking**
+- In the future version an option for adding new items based on student interest will also be added.
+- Use the same app for campus **medical store inventory tracking** and **convenience store** which will be very helpful.
 
 ---
 
