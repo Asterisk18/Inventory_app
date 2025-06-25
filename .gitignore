@@ -1,0 +1,3 @@
+venv_flask3/
+.dockerignore
+app/__pycache__/
