@@ -100,6 +100,4 @@ flask shell
   python3 run.py
 ```
 
-### App will be running at:
-### http://localhost:5000
-```
+**App will be running at** : http://localhost:5000
