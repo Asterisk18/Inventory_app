@@ -1,0 +1,64 @@
+# 🛒 Inventory Tracking App
+
+A modern, responsive **Flask-based web app** to help students check live inventory across campus shops — saving time, avoiding unnecessary trips, and empowering students with real-time availability info.
+
+This project is fully Dockerized and includes admin and user login presets for fast testing and demo. Ready to be extended for campus medical stores and student-powered product suggestions in future versions.
+
+---
+
+## 🚀 Features
+
+- 🧾 **Live Inventory Dashboard** for all users
+- 🔐 **Admin Panel** with:
+  - Add/Edit/Delete inventory items
+  - Rename products
+  - Quick quantity update via ➕➖ buttons
+  - Low-stock alert (items with quantity < 5 shown in red)
+- 🔎 **Live Search Bar** on the inventory page
+- 🌓 **Dark Mode** UI enabled
+- 🧑‍🎓 Students can register as users (non-admin)
+- ✨ Flask-WTF based form validations
+
+---
+
+## 👥 User Roles & Demo Credentials
+
+| Role         | Username | Email              | Password |
+|--------------|----------|--------------------|----------|
+| Admin        | admin    | admin@example.com  | admin    |
+| Normal User  | user     | user@example.com   | user     |
+
+✅ **New users can register using the "Register" tab**  
+👁️ **Only admins see admin controls (add/edit/low-stock)**
+
+---
+
+## 🎯 Use Case
+
+> This project serves as a **digital representation of campus shop inventories**, allowing students to:
+
+- View available products before physically visiting
+- Avoid unnecessary trips if items are out of stock
+- Suggest new items (future roadmap)
+- Use the same app for campus **medical store inventory tracking**
+
+---
+
+## 🧑‍💻 Tech Stack
+
+- **Framework:** Flask (Python)
+- **Database:** SQLite with SQLAlchemy ORM
+- **Forms & Auth:** Flask-WTF, Flask-Login
+- **Styling:** Bootstrap 5 + custom CSS
+- **Deployment Ready:** Dockerized
+
+---
+
+## 🐳 Run with Docker
+
+```bash
+# Pull the latest image
+docker pull asp117920/flask-app:latest
+
+# Run the app
+docker run -p 5000:5000 asp117920/flask-app:latest
